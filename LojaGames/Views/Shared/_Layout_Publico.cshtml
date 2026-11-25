@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GameZone | Loja Gamer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body { background:#10121a; color:#f4f4f7; font-family:Arial,Helvetica,sans-serif; }
+        .navbar { background:#171a25; border-bottom:1px solid #303548; }
+        .navbar-brand { color:#8df542!important; font-weight:800; letter-spacing:1px; font-size:25px; }
+        .navbar .nav-link { color:#d8dbea!important; }
+        .navbar .nav-link:hover { color:#8df542!important; }
+        .hero { background:linear-gradient(115deg,#1b2638,#202c20); border:1px solid #38465a; border-radius:18px; padding:42px; margin:28px auto; }
+        .hero h1 { font-weight:800; } .accent { color:#8df542; }
+        .btn-game { background:#8df542; color:#111!important; border:0; font-weight:700; }
+        .btn-game:hover { background:#75d52d; }
+        .card-game { height:100%; background:#1a1e2b; border:1px solid #343b50; color:#f4f4f7; border-radius:14px; overflow:hidden; }
+        .card-game img { height:190px; object-fit:cover; background:#272c3a; }
+        .price { color:#8df542; font-size:1.35rem; font-weight:800; }
+        footer { color:#9ba3b7; border-top:1px solid #303548; margin-top:50px; padding:25px 0; }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" asp-controller="AreaPublica" asp-action="Produtos"><i class="bi bi-controller"></i> GAMEZONE</a>
+        <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#menu"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+                <li class="nav-item"><a class="nav-link" asp-controller="AreaPublica" asp-action="Produtos">Todos</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="AreaPublica" asp-action="Consoles">Consoles</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="AreaPublica" asp-action="Jogos">Jogos</a></li>
+                <li class="nav-item"><a class="nav-link" asp-controller="AreaPublica" asp-action="Acessorios">Acessórios</a></li>
+                <li class="nav-item ms-lg-3"><a class="btn btn-game btn-sm" asp-controller="AreaRestrita" asp-action="AdmProdutos">Área administrativa</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<main class="container">
+    @RenderBody()
+</main>
+<footer><div class="container d-flex justify-content-between flex-wrap gap-2"><span>© 2026 GameZone - Loja Gamer</span><span>Seu próximo nível começa aqui.</span></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

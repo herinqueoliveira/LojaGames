@@ -1,0 +1,52 @@
+@model Produto
+@{
+    var produtos = ViewBag.Produtos as List<Produto> ?? new List<Produto>();
+    Layout = "_Layout_Publico";
+}
+<div class="py-4">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+        <div><h1 class="fw-bold">Painel administrativo</h1><p class="text-secondary mb-0">Gerenciamento do catálogo da GameZone.</p></div>
+        <a class="btn btn-outline-light" asp-controller="AreaPublica" asp-action="Produtos">Ver loja</a>
+    </div>
+    @if (TempData["Mensagem"] != null) { <div class="alert alert-success">@TempData["Mensagem"]</div> }
+    <div class="row g-3 mb-4">
+        <div class="col-md-4"><div class="card bg-dark border-secondary text-light p-3"><small class="text-secondary">Produtos cadastrados</small><h2>@produtos.Count</h2></div></div>
+        <div class="col-md-4"><div class="card bg-dark border-secondary text-light p-3"><small class="text-secondary">Unidades em estoque</small><h2>@produtos.Sum(p => p.Estoque)</h2></div></div>
+        <div class="col-md-4"><div class="card bg-dark border-secondary text-light p-3"><small class="text-secondary">Categorias</small><h2>@produtos.Select(p => p.Categoria).Distinct().Count()</h2></div></div>
+    </div>
+    <div class="card bg-dark border-secondary text-light mb-4">
+        <div class="card-header border-secondary"><h4 class="mb-0"><i class="bi bi-plus-circle accent"></i> Cadastrar produto</h4></div>
+        <div class="card-body">
+            <form asp-controller="AreaRestrita" asp-action="SalvarModerno" method="post">
+                @Html.AntiForgeryToken()
+                <div class="row g-3">
+                    <div class="col-md-6"><label asp-for="Nome" class="form-label">Nome do produto</label><input asp-for="Nome" class="form-control" required></div>
+                    <div class="col-md-3"><label asp-for="Categoria" class="form-label">Categoria</label><select asp-for="Categoria" class="form-select" required><option value="">Selecione</option><option>Console</option><option>Jogo</option><option>Acessório</option></select></div>
+                    <div class="col-md-3"><label asp-for="Plataforma" class="form-label">Plataforma</label><input asp-for="Plataforma" class="form-control" placeholder="PlayStation, Xbox, PC..." required></div>
+                    <div class="col-md-3"><label asp-for="Estoque" class="form-label">Estoque</label><input asp-for="Estoque" type="number" min="0" class="form-control" required></div>
+                    <div class="col-md-3"><label asp-for="Preco" class="form-label">Preço (R$)</label><input asp-for="Preco" type="number" min="0" step="0.01" class="form-control" required></div>
+                    <div class="col-md-6"><label asp-for="Imagem" class="form-label">URL da imagem</label><input asp-for="Imagem" type="url" class="form-control" placeholder="https://..."></div>
+                    <div class="col-12"><label asp-for="Descricao" class="form-label">Descrição</label><textarea asp-for="Descricao" class="form-control" rows="3" required></textarea></div>
+                    <div class="col-12 text-end"><button type="submit" class="btn btn-game"><i class="bi bi-plus-lg"></i> Cadastrar produto</button></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card bg-dark border-secondary text-light">
+        <div class="card-header border-secondary"><h4 class="mb-0">Produtos cadastrados</h4></div>
+        <div class="card-body table-responsive">
+            <table class="table table-dark table-hover align-middle">
+                <thead><tr><th>ID</th><th>Produto</th><th>Categoria</th><th>Plataforma</th><th>Estoque</th><th>Preço</th><th>Ação</th></tr></thead>
+                <tbody>
+                @foreach (var p in produtos)
+                {
+                    <tr>
+                        <td>@p.Id</td><td>@p.Nome</td><td>@p.Categoria</td><td>@p.Plataforma</td><td>@p.Estoque</td><td>@p.Preco.ToString("C", new System.Globalization.CultureInfo("pt-BR"))</td>
+                        <td><form asp-action="Excluir" method="post" onsubmit="return confirm('Deseja remover este produto?')">@Html.AntiForgeryToken()<input type="hidden" name="id" value="@p.Id"><button class="btn btn-sm btn-outline-danger" type="submit"><i class="bi bi-trash"></i></button></form></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

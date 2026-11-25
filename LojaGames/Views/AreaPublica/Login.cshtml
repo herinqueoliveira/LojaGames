@@ -1,0 +1,14 @@
+@{
+    Layout = "_Layout_Login";
+}
+<div class="container py-5" style="max-width:480px">
+    <div class="card p-4 shadow">
+        <h2>Entrar na GameZone</h2>
+        <p class="text-secondary">Área demonstrativa de acesso.</p>
+        <form>
+            <label class="form-label">E-mail</label><input type="email" class="form-control mb-3" required>
+            <label class="form-label">Senha</label><input type="password" class="form-control mb-3" required>
+            <a class="btn btn-success w-100" asp-controller="AreaPublica" asp-action="Produtos">Entrar</a>
+        </form>
+    </div>
+</div>
